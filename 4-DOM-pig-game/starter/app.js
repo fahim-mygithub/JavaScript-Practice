@@ -9,10 +9,11 @@ GAME RULES:
 
 */
 
-let scores, roundScore, activePlayer, gamePlaying;
+let scores, roundScore, activePlayer, gamePlaying, doubleSix;
 
 newGame();
 
+let lastDice;
 
 document.querySelector('.btn-roll').addEventListener('click', function(){
     if(gamePlaying){
@@ -27,13 +28,22 @@ document.querySelector('.btn-roll').addEventListener('click', function(){
 
 
         //3. Update the round score IF the rolled number is NOT one
-        if (dice !== 1){
+        
+        //Check for last dice is six
+        if(dice === 6 && lastDice === 6){
+            scores[activePlayer] = 0;
+            document.querySelector('#score-' + activePlayer).textContent = scores[activePlayer];
+            nextPlayer();
+        }
+        else if (dice !== 1){
+            
             //Add score
             roundScore += dice;
             document.querySelector('#current-' + activePlayer).textContent = roundScore;
         } else{
         nextPlayer();
         }
+        lastDice = dice;
     }
 });
 
@@ -45,8 +55,18 @@ document.querySelector('.btn-hold').addEventListener('click', function(){
         //Update the UI 
         document.querySelector('#score-' + activePlayer).textContent = scores[activePlayer];
 
+        var input = document.querySelector('.final-score').value;
+
+        // Undefined, 0 , null, or "" are Coerced to false
+        var winningScore;
+        
+        if(input){
+            winningScore = input;
+        } else{
+            winningScore = 20;
+        }
         //Check if player won the game
-        if(scores[activePlayer] >= 20){
+        if(scores[activePlayer] >= winningScore){
             document.querySelector('#name-' + activePlayer).textContent = 'Winner!';
             document.querySelector('.dice').style.display = 'none';
             document.querySelector('.player-' + activePlayer + '-panel').classList.add('winner');
@@ -54,6 +74,7 @@ document.querySelector('.btn-hold').addEventListener('click', function(){
             gamePlaying = false;
         }else {
             // Next Player
+            lastDice = 0;
             nextPlayer();
         }
     }
@@ -62,6 +83,7 @@ document.querySelector('.btn-hold').addEventListener('click', function(){
 function nextPlayer(){
      //Next Player
      activePlayer === 0 ? activePlayer = 1 : activePlayer = 0;
+     doubleSix = 0;
      roundScore = 0;
 
      document.getElementById('current-0').textContent = '0';
