@@ -187,16 +187,39 @@
 
 // retirementUs(1990);
 
-function interviewQuestion(job){
-    return function(name){
-        if(job === 'designer'){
-            console.log(name + ', can you please explain what UX design is?');
-        }else if(job === 'teacher'){
-            console.log('What subject do you teach, ' + name + "?");
-        }else{
-            console.log('Hello ' + name + ', what do you do?');
+// function interviewQuestion(job){
+//     return function(name){
+//         if(job === 'designer'){
+//             console.log(name + ', can you please explain what UX design is?');
+//         }else if(job === 'teacher'){
+//             console.log('What subject do you teach, ' + name + "?");
+//         }else{
+//             console.log('Hello ' + name + ', what do you do?');
+//         }
+//     }
+// }
+
+// interviewQuestion('teacher')('Sam');
+
+var john = {
+    name: 'John',
+    age: 29,
+    job: 'teacher',
+    presentation: function(style, timeOfday){
+        if(style == 'formal'){
+            console.log('Good ' + timeOfday + ' Sir/Mam! My name is ' + this.name + '. I work as a ' + this.job + ' and I am ' + this.age + ' years old');
+        }else if(style === 'casual'){
+            console.log('Yo nice ' + timeOfday + ' were having' + 'My name is ' + this.name + '. I work as a ' + this.job + ' and I am ' + this.age + ' years old');
         }
     }
-}
+};
 
-interviewQuestion('teacher')('Sam');
+john.presentation('formal', 'morning');
+
+var emily = {
+    name: 'Emily',
+    age: 25,
+    job: 'designer'
+};
+
+john.presentation.call(emily, 'casual', 'afternoon');
