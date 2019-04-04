@@ -201,25 +201,53 @@
 
 // interviewQuestion('teacher')('Sam');
 
-var john = {
-    name: 'John',
-    age: 29,
-    job: 'teacher',
-    presentation: function(style, timeOfday){
-        if(style == 'formal'){
-            console.log('Good ' + timeOfday + ' Sir/Mam! My name is ' + this.name + '. I work as a ' + this.job + ' and I am ' + this.age + ' years old');
-        }else if(style === 'casual'){
-            console.log('Yo nice ' + timeOfday + ' were having' + 'My name is ' + this.name + '. I work as a ' + this.job + ' and I am ' + this.age + ' years old');
-        }
-    }
+// var john = {
+//     name: 'John',
+//     age: 29,
+//     job: 'teacher',
+//     presentation: function(style, timeOfday){
+//         if(style == 'formal'){
+//             console.log('Good ' + timeOfday + ' Sir/Mam! My name is ' + this.name + '. I work as a ' + this.job + ' and I am ' + this.age + ' years old');
+//         }else if(style === 'casual'){
+//             console.log('Yo nice ' + timeOfday + ' were having. ' + 'My name is ' + this.name + '. I work as a ' + this.job + ' and I am ' + this.age + ' years old');
+//         }
+//     }
+// };
+
+// john.presentation('formal', 'morning');
+
+// var emily = {
+//     name: 'Emily',
+//     age: 25,
+//     job: 'designer'
+// };
+
+// john.presentation.call(emily, 'casual', 'afternoon');
+
+//Coding Challange # 7
+
+function QuestionConstructor(aQuestion, answersArray, correctNum){
+    this.question = aQuestion;
+    this.answers = answersArray;
+    this.correct = correctNum;
 };
 
-john.presentation('formal', 'morning');
+var questionOne = new QuestionConstructor(
+    'What is the second largest city in the state of New York?',
+    ['New York', 'Buffalo', 'Albany'],
+    1);
 
-var emily = {
-    name: 'Emily',
-    age: 25,
-    job: 'designer'
-};
+var questionTwo = new QuestionConstructor(
+    'What operating system is on the Samsung Galaxy S10?',
+    ['Andriod','IOS','windows'],
+    0);
 
-john.presentation.call(emily, 'casual', 'afternoon');
+var questionThree = new QuestionConstructor(
+    'Name a Browser with builtin Flash support?'
+    ['Firefox','Interet Explorer','Google Chrome'],
+    3);
+
+var questionArray = [questionOne, questionTwo, questionThree];
+
+var rand = myArray[Math.floor(Math.random() * questionArray.length)];
+
