@@ -232,6 +232,33 @@ function QuestionConstructor(aQuestion, answersArray, correctNum){
     this.correct = correctNum;
 };
 
+QuestionConstructor.prototype.displayQuestion = function(){
+    console.log(this.question);
+
+    for(let i = 0; i < this.answers.length; i++) {
+        console.log((i + 1) + ': ' + this.answers[i]);
+    }
+}
+
+QuestionConstructor.prototype.checkAnswer = function(answer, callback) {
+    var score
+    
+    if(answer === this.correct){
+        console.log('Correct Answer!');
+        score = callback(true);
+    } else{
+        console.log('Incorrect Answer!');
+        score = callback(false);
+    }
+
+    this.displayScore(score);
+}
+
+QuestionConstructor.prototype.displayScore = function(score){
+    console.log('Your current score is: ' + score);
+    console.log('---------------------------------------------')
+}
+
 var questionOne = new QuestionConstructor(
     'What is the second largest city in the state of New York?',
     ['New York', 'Buffalo', 'Albany'],
@@ -243,11 +270,47 @@ var questionTwo = new QuestionConstructor(
     0);
 
 var questionThree = new QuestionConstructor(
-    'Name a Browser with builtin Flash support?'
+    'Name a Browser with builtin Flash support?',
     ['Firefox','Interet Explorer','Google Chrome'],
-    3);
+    2);
 
-var questionArray = [questionOne, questionTwo, questionThree];
+    var questionArray = [questionOne, questionTwo, questionThree];
 
-var rand = myArray[Math.floor(Math.random() * questionArray.length)];
+    function score(){
+        var scoreNum = 0;
+        return function(correct){
+            if(correct){
+                scoreNum++;
+            }
+            return scoreNum;
+        }
+    }
+    
+    var keepScore = score();
+
+
+
+    function nextQuestion(){
+        
+
+        var rand = questionArray[Math.floor(Math.random() * questionArray.length)];
+        
+        rand.displayQuestion();
+        
+        var answer = prompt('Please Select the Correct Answer #');
+        
+        if(answer !== 'exit'){
+            rand.checkAnswer(parseInt(answer)) - 1, keepScore;
+            nextQuestion();
+        }
+        
+    }
+
+nextQuestion();
+
+
+
+
+
+
 
